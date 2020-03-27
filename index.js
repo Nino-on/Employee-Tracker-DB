@@ -20,7 +20,7 @@ connection.connect(function(err){
                 console.log(error);
             } else {
                 results.forEach((EMPLOYEE,index)=>{
-                    console.log(`ID: ${EMPLOYEE.ID} : ${EMPLOYEE.FIRST_NAME}, ${EMPLOYEE.FIRST_NAME}| ${EMPLOYEE.ROLE_ID} |${EMPLOYEE.MANAGER_ID}`);
+                    console.log(`ID: ${EMPLOYEE.ID} : ${EMPLOYEE.FIRST_NAME}, ${EMPLOYEE.LAST_NAME}| ${EMPLOYEE.ROLE_ID} |${EMPLOYEE.MANAGER_ID}`);
                 })
             } connection.destroy();
         })
