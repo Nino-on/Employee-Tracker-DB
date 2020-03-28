@@ -19,7 +19,7 @@ connection.connect(function(err){
             if(error) {
                 console.log(error);
             } else {
-              console.log("Welcome to the Employee tracker Datatbase") 
+              console.log("Welcome to the Employee Tracker Database") 
                 startQuestions();
             }
         })
@@ -33,23 +33,78 @@ console.table([
 ]);
 //Start with options
 function startQuestions(){
-    inquirer.prompt ([{
+    inquire.prompt([{
         type:"list",
         name:"option",
-        message:"What woudl like to do?",
+        message:"What would like to do?",
         choices:["Add a Department, Role or Employee?","View Department, Roles, or Employee?","Update Employee Role?"]
     }]).then((answer)=>{
-        if (answer.Welcome === "addInfo") {
+        if (answer.option === "Add a Department, Role or Employee?") {
             addInformation();
             }
     })
 }
-//
-
-
-
-
-
+// Selecting where to add to
+function addInformation (){
+    inquire.prompt([{
+        type:"list",
+        name:"option",
+        message:"What inforamiton do you want to ADD to ?",
+        choices:["Add a Department?","Add a Role?","Add a Employee?"]
+    }]).then((answer)=>{
+        if (answer.option === "Add a Employee?") {
+            addEmployee();
+            }
+    })
+}
+//get information for adding employee
+function addEmployee(){
+    inquire.prompt([
+        {
+            name: "empFirst",
+            type: "input",
+            message: "What is your First Name?"
+        },
+        {
+            name: "empLast",
+            type: "input",
+            message: "What is your Last Name?"
+        },
+        {
+            name: "empRole",
+            type: "input",
+            message: "What is your Role ID?"
+        },
+        {
+            name: "managerID",
+            type: "input",
+            message: "What is your Manager's ID?",
+            validate: function(value) {
+                if (isNaN(value) === false) {
+                  return true;
+                }
+                return false;
+              }
+        }
+    ])
+    .then(function(answer){
+    connection.query (
+        "INSERT INTO EMPLOYEE(FIRST_NAME,LAST_NAME,ROLE_ID,MANAGER_ID)VALUES (?)",
+        {
+            FIRST_NAME: answer.empFirst,
+            LAST_NAME: answer.empLast,
+            ROLE_ID: parseInt(answer.empRole) || 0,
+            MANAGER_ID: parseInt(answer.managerID) || 0
+        },
+        function (err){
+            if (err) throw err;
+            console.log("Employee added");
+          
+            
+        }
+    );
+    });
+}
 /*results.forEach((EMPLOYEE,index)=>{
     console.log(`ID: ${EMPLOYEE.ID} : ${EMPLOYEE.FIRST_NAME}, ${EMPLOYEE.LAST_NAME}| ${EMPLOYEE.ROLE_ID} |${EMPLOYEE.MANAGER_ID}`);
 })*/
