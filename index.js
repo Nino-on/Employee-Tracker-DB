@@ -19,11 +19,37 @@ connection.connect(function(err){
             if(error) {
                 console.log(error);
             } else {
-                results.forEach((EMPLOYEE,index)=>{
-                    console.log(`ID: ${EMPLOYEE.ID} : ${EMPLOYEE.FIRST_NAME}, ${EMPLOYEE.LAST_NAME}| ${EMPLOYEE.ROLE_ID} |${EMPLOYEE.MANAGER_ID}`);
-                })
-            } connection.destroy();
+              console.log("Welcome to the Employee tracker Datatbase") 
+                startQuestions();
+            }
         })
     }
 
 });
+console.table([
+    {
+        Employee_ID: 0 ,FIRST_NAME: "Raul",LAST_NAME: "Nino",Role_ID: 24, Manager_ID:1
+    }
+]);
+//Start with options
+function startQuestions(){
+    inquirer.prompt ([{
+        type:"list",
+        name:"option",
+        message:"What woudl like to do?",
+        choices:["Add a Department, Role or Employee?","View Department, Roles, or Employee?","Update Employee Role?"]
+    }]).then((answer)=>{
+        if (answer.Welcome === "addInfo") {
+            addInformation();
+            }
+    })
+}
+//
+
+
+
+
+
+/*results.forEach((EMPLOYEE,index)=>{
+    console.log(`ID: ${EMPLOYEE.ID} : ${EMPLOYEE.FIRST_NAME}, ${EMPLOYEE.LAST_NAME}| ${EMPLOYEE.ROLE_ID} |${EMPLOYEE.MANAGER_ID}`);
+})*/
